@@ -3,6 +3,7 @@
 #include <ctime>
 #include <chrono>
 #include <windows.h>
+#include <conio.h>
 //insercion directa
 //shell sort
 using namespace std;
@@ -13,6 +14,7 @@ void copia(int[],int[],int);
 int secuencialDes(int[],int,int);
 void imprimirArreglo(int[],int);
 void menuOrdenar(int[],int [],int);
+void menuBusqueda(int[], int[],int);
 int main() {
 	SetConsoleOutputCP(CP_UTF8);
 	//Tamaño varaible del ARRAY
@@ -49,6 +51,7 @@ system("pause");
 				menuOrdenar(arr,copy,n);
 				break;
 			case 2:
+				menuBusqueda(arr,copy,n);
 				break;
 			case 0:
 				cout<<"Saliendo del programa....\n";
@@ -60,6 +63,8 @@ system("pause");
 				
 	}while(op1!=0);
 system("pause");
+	getch();
+	return 0;
 }
 
 void menuOrdenar(int arr[],int copy[], int n){
@@ -70,7 +75,6 @@ void menuOrdenar(int arr[],int copy[], int n){
 		cout<<endl<<"\t MÉTODOS DE COMPARACION DE EFICIENCIA\n"
 			<<"1. Insercion directa"<<endl
 			<<"2. Shell sort"<<endl
-
 			<<"0. Regresar el menú principal"<<endl;
 
 		cout<<"Elija una opcion: "; cin>>op;
@@ -91,11 +95,6 @@ void menuOrdenar(int arr[],int copy[], int n){
 	} while (op!=0);	
 		
 }
-
-	
-
-
-//funcion que genera la copia del array original
 
 void menuBusqueda(int arr[], int copy[], int n) {
 		int dato,op;
@@ -147,6 +146,7 @@ void InsercionDir(int A[],int n) {
 	chrono::duration<double> duracion=fin-inicio; //calcula
 	imprimirArreglo(A,n);
 	cout<<endl<<"Tiempo de ejecucion: "<<duracion.count()<<endl;//imprime
+	system("pause");
 }
 //metodo de ordenacion por shellsort
 void ShellSort(int A[],int n) {
@@ -173,6 +173,7 @@ void ShellSort(int A[],int n) {
 	chrono::duration<double> duracion=fin-inicio;//calcula
 	imprimirArreglo(A,n);
 	cout<<endl<<"Tiempo de ejecucion: "<<duracion.count()<<endl;//imprime
+		system("pause");
 }
 
 //Busqueda secuencial desordenada
