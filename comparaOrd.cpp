@@ -61,7 +61,7 @@ void menuBusqueda(int arr[], int copy[], int n) {
 		cout<<endl<<"\tCOMPARACION DE EFICIENCIA\n"
 			<<"1. Busqueda secuencial desordenada"<<endl
 			<<"2. Busqueda binaria"<<endl
-			<<"0. Salir del programa"<<endl;
+			<<"0. Volver al menu principal"<<endl;
 		cout<<"Elija una opcion: "; cin>>op;
 		switch (op) {
 			case 1:
@@ -76,7 +76,6 @@ void menuBusqueda(int arr[], int copy[], int n) {
 			case 2:
 				break;
 			case 0:
-				cout<<"Saliendo del programa..."<<endl;
 				break;
 			default:
 				cout<<"Ingrese una opcion valida"<<endl;
