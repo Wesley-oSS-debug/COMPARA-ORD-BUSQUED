@@ -10,6 +10,7 @@ using namespace std;
 void InsercionDir(int[],int);
 void ShellSort(int[],int);
 void copia(int[],int[],int);
+int secuencialDes(int[],int,int);
 void imprimirArreglo(int[],int);
 void menuOrdenar(int[],int [],int);
 int main() {
@@ -69,7 +70,9 @@ void menuOrdenar(int arr[],int copy[], int n){
 		cout<<endl<<"\t MÉTODOS DE COMPARACION DE EFICIENCIA\n"
 			<<"1. Insercion directa"<<endl
 			<<"2. Shell sort"<<endl
+
 			<<"0. Regresar el menú principal"<<endl;
+
 		cout<<"Elija una opcion: "; cin>>op;
 		switch (op) {
 			case 1:
@@ -84,13 +87,45 @@ void menuOrdenar(int arr[],int copy[], int n){
 			default:
 				cout<<"Ingrese una opcion valida"<<endl;
 		}
+
 	} while (op!=0);	
 		
 }
-	
+
 	
 
+
 //funcion que genera la copia del array original
+
+void menuBusqueda(int arr[], int copy[], int n) {
+		int dato,op;
+		do {
+		copia(arr,copy,n);
+		cout<<endl<<"\tCOMPARACION DE EFICIENCIA\n"
+			<<"1. Busqueda secuencial desordenada"<<endl
+			<<"2. Busqueda binaria"<<endl
+			<<"0. Volver al menu principal"<<endl;
+		cout<<"Elija una opcion: "; cin>>op;
+		switch (op) {
+			case 1:
+				cout<<"Ingrese un numero a buscar: "; cin>>dato;
+				if (secuencialDes(arr,n,dato)!=-1) {
+					cout<<"Resultado de la busqueda indice: ";
+					cout<<secuencialDes(arr,n,dato);
+				} else {
+					cout<<"No se encontro el dato";
+				}
+				break;
+			case 2:
+				break;
+			case 0:
+				break;
+			default:
+				cout<<"Ingrese una opcion valida"<<endl;
+		}
+	} while (op!=0);
+}
+
 void copia(int A[],int copy[],int n) {
 	for (int i=0;i<n;i++) {
 		copy[i]=A[i];
@@ -139,7 +174,21 @@ void ShellSort(int A[],int n) {
 	imprimirArreglo(A,n);
 	cout<<endl<<"Tiempo de ejecucion: "<<duracion.count()<<endl;//imprime
 }
-// imprime arrays( es reutilizable)
+
+//Busqueda secuencial desordenada
+int secuencialDes(int A[],int n,int dato) {
+	int pos=-1;
+	int i=0;
+	while (i<n && A[i]!=dato) {
+		i++;
+	}
+	if (i<n) {
+		pos=i;
+	}
+	return pos;
+}
+
+
 void imprimirArreglo(int arr[],int n) {
 	cout<<endl<<"Elementos del arreglo:\n";
 	for (int i=0;i<n;i++) {
