@@ -15,15 +15,17 @@ void menuOrdenar(int[],int [],int);
 void menuBusqueda(int[], int[],int);
 int main() {
 	SetConsoleOutputCP(CP_UTF8);
-	//Tamaño varaible del ARRAY
-	int long n=100;
 	//inicilizamos el numero srand
 	srand(time(0));
 	//tamaño maximo del array
-	const int long tamMax=100000;
-	int arr[tamMax];
-	int copy[tamMax];
-	//generar numeros de 1 a n
+	const int long tamMax=10000000;
+	//int arr[tamMax];
+	//int copy[tamMax];
+	//Tamaño varaible del ARRAY
+	int n=10000000;
+	int* arr = new int[n];
+	int* copy = new int[n];
+	//generar numeros de 1 a n 
 	for (int i=0;i<n;i++) {
 		arr[i]=i+1;
 	}
@@ -35,11 +37,9 @@ int main() {
 		arr[i]=arr[j];
 		arr[j]=temp;
 	}
-	imprimirArreglo(arr,n);
-int op1;
-//menu principal
-cout<<"\n";
-system("pause");
+	int op1;
+	//menu principal
+	cout<<"\n";
 	do {
 		system("cls");
 		cout<<"\n--------------MENU PRINCIPAL--------------\n"
@@ -133,7 +133,6 @@ void menuBusqueda(int arr[], int copy[], int n) {
 		cout<<"Elija una opcion: "; cin>>op;
 		switch (op) {
 			case 1:
-				imprimirArreglo(arr,n);
 				cout<<"Ingrese un numero a buscar: "; cin>>dato;
 				inicio=chrono::high_resolution_clock::now(); // inicio
 				pos=secuencialDes(arr,n,dato,comparaciones);
@@ -151,7 +150,6 @@ void menuBusqueda(int arr[], int copy[], int n) {
 				break;
 			case 2:
 				ShellSort(copy,n,comparaciones);
-				imprimirArreglo(copy,n);
 				cout<<"Ingrese un numero a buscar: "; cin>>dato;
 				inicio=chrono::high_resolution_clock::now(); // inicio
 				pos=binaria(copy,n,dato,comparaciones);
