@@ -5,11 +5,11 @@
 #include <windows.h>
 using namespace std;
 // los protipos de las funciones
-void InsercionDir(int[],int,int&);
-void ShellSort(int[],int,int&);
+void InsercionDir(int[],int,double&);
+void ShellSort(int[],int, double&);
 void copia(int[],int[],int);
-int secuencialDes(int[],int,int,int&);
-int binaria(int[],int,int,int&);
+int secuencialDes(int[],int,int, double&);
+int binaria(int[],int,int, double&);
 void imprimirArreglo(int[],int);
 void menuOrdenar(int[],int [],int);
 void menuBusqueda(int[], int[],int);
@@ -17,14 +17,17 @@ int main() {
 	SetConsoleOutputCP(CP_UTF8);
 	//inicilizamos el numero srand
 	srand(time(0));
-	//tamaño maximo del array
-	const int long tamMax=10000000;
+	//const int tamMax=200000;
 	//int arr[tamMax];
-	//int copy[tamMax];
-	//Tamaño varaible del ARRAY
-	int n=10000000;
-	int* arr = new int[n];
-	int* copy = new int[n];
+	//nt copy[tamMax];
+
+	int n;
+	cout<<"------------COMPARACION DE ALGORITMOS------------\n";
+	cout<<"Ingrese el numero de elementos del arreglo (maximo 200000): "; cin>>n;
+
+	int* arr=new int[n];
+	int* copy=new int[n];
+
 	//generar numeros de 1 a n 
 	for (int i=0;i<n;i++) {
 		arr[i]=i+1;
@@ -38,6 +41,7 @@ int main() {
 		arr[j]=temp;
 	}
 	int op1;
+	system("pause");
 	//menu principal
 	cout<<"\n";
 	do {
@@ -49,7 +53,6 @@ int main() {
 			<<"Escriba la opción: "; cin>>op1;
 	
 		switch(op1){
-			
 			case 1:
 				menuOrdenar(arr,copy,n);
 				break;
@@ -70,13 +73,16 @@ system("pause");
 }
 
 void menuOrdenar(int arr[],int copy[], int n){
-	int op;
+	int op,pruebas;
 	//declaracion
 	auto inicio = chrono::high_resolution_clock::now();
     auto fin = chrono::high_resolution_clock::now();
     chrono::duration<double> duracion; // Duración
 	do {
-		int comparaciones=0;
+		double c=0;
+		double cTotal=0;
+		double tTotal=0;
+		double promedioT;
 		system("cls");
 		copia(arr,copy,n);
 		cout<<endl<<"\t MÉTODOS DE COMPARACION DE EFICIENCIA\n"
@@ -87,23 +93,37 @@ void menuOrdenar(int arr[],int copy[], int n){
 		cout<<"Elija una opcion: "; cin>>op;
 		switch (op) {
 			case 1:
-				inicio=chrono::high_resolution_clock::now(); // inicio
-            	InsercionDir(copy,n,comparaciones);
-           		fin=chrono::high_resolution_clock::now(); // fin
-            	duracion=fin-inicio;//calcula
-            	imprimirArreglo(copy,n);
-            	cout<<endl<<"Tiempo de ejecucion (Insercion Directa): "<<duracion.count()<<endl<<endl; // imprime
-            	cout<<"Numero de comparaciones: "<<comparaciones<<endl<<endl;
+				
+				cout<<"Ingrese el numero de pruebas a realizar: "; cin>>pruebas;
+				for (int i=0;i<pruebas;i++) {
+					inicio=chrono::high_resolution_clock::now(); // inicio
+            		InsercionDir(copy,n,c);
+           			fin=chrono::high_resolution_clock::now(); // fin
+           			duracion=fin-inicio;//calcula
+           			copia(arr,copy,n);
+					cout<<endl<<"Tiempo de ejecucion (Insercion Directa): "<<duracion.count()<<endl<<endl; // imprime
+					tTotal+=duracion.count();
+				}
+				promedioT=tTotal/pruebas;
+				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
+				cout<<"Numero de comparaciones promedio: "<<fixed<<c/pruebas<<endl<<endl;
             	system("pause");
 				break;
 			case 2:
-				inicio=chrono::high_resolution_clock::now(); // inicio
-				ShellSort(copy,n,comparaciones);
-				fin=chrono::high_resolution_clock::now(); // fin
-				duracion=fin-inicio;//calcula
-				imprimirArreglo(copy,n);
-            	cout<<endl<<"Tiempo de ejecucion (Shell Sort): "<<duracion.count()<<endl<<endl; // imprime
-            	cout<<"Numero de comparaciones: "<<comparaciones<<endl<<endl;
+				
+				cout<<"Ingrese el numero de pruebas a realizar: "; cin>>pruebas;
+				for (int i=0;i<pruebas;i++) {
+					inicio=chrono::high_resolution_clock::now(); // inicio
+					ShellSort(copy,n,c);
+					fin=chrono::high_resolution_clock::now(); // fin
+					duracion=fin-inicio;//calcula
+					copia(arr,copy,n);
+					cout<<endl<<"Tiempo de ejecucion (Shell Sort): "<<duracion.count()<<endl<<endl; // imprime
+					tTotal+=duracion.count();
+				}
+				promedioT=tTotal/pruebas;
+				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
+				cout<<"Numero de comparaciones promedio: "<<c/pruebas<<endl<<endl;
             	system("pause");
 				break;
 			case 0:
@@ -116,15 +136,18 @@ void menuOrdenar(int arr[],int copy[], int n){
 	} while (op!=0);	
 		
 }
-
+//MENU DE METODOS DE BUSQUEDA
 void menuBusqueda(int arr[], int copy[], int n) {
-		int dato,op,pos;
+		int dato,op,pos,pruebas;
 		//declaracion
 		auto inicio = chrono::high_resolution_clock::now();
    		auto fin = chrono::high_resolution_clock::now();
    		chrono::duration<double> duracion; // Duración
 		do {
-		int comparaciones=0;
+		double c=0;
+		double cTotal=0;
+		double tTotal=0;
+		double promedioT;
 		copia(arr,copy,n);
 		cout<<endl<<"\tCOMPARACION DE EFICIENCIA\n"
 			<<"1. Busqueda secuencial desordenada"<<endl
@@ -133,31 +156,44 @@ void menuBusqueda(int arr[], int copy[], int n) {
 		cout<<"Elija una opcion: "; cin>>op;
 		switch (op) {
 			case 1:
-				cout<<"Ingrese un numero a buscar: "; cin>>dato;
-				inicio=chrono::high_resolution_clock::now(); // inicio
-				pos=secuencialDes(arr,n,dato,comparaciones);
-				fin=chrono::high_resolution_clock::now(); // fin
-            	duracion=fin-inicio;//calcula
-				if (pos!=-1) {
-					cout<<"Resultado de la busqueda indice: ";
-					cout<<pos;
-				} else {
-					cout<<"No se encontro el dato";
+				cout<<"Ingrese el numero de pruebas a realizar: "; cin>>pruebas;
+				cout<<"Ingrese un numero a buscar: "; cin>>dato;	
+				for (int i=0;i<pruebas;i++) {
+					inicio=chrono::high_resolution_clock::now(); // inicio
+					pos=secuencialDes(arr,n,dato,c);
+					fin=chrono::high_resolution_clock::now(); // fin
+	            	duracion=fin-inicio;//calcula
+					cout<<endl<<"Tiempo de ejecucion (Busqueda Secuencial Desordenada): "<<duracion.count()<<endl<<endl; // imprime
+					tTotal+=duracion.count(); 
 				}
-				cout<<endl<<"Tiempo de ejecucion (Busqueda Secuencial Desordenada): "<<duracion.count()<<endl<<endl; // imprime
-				cout<<"Numero de comparaciones: "<<comparaciones<<endl<<endl;
+					if (pos!=-1) {
+						cout<<"Resultado de la busqueda indice: ";
+						cout<<pos;
+					} else {
+						cout<<"No se encontro el dato";
+					}
+					cout<<endl;
+				promedioT=tTotal/pruebas;
+				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
+				cout<<"Numero de comparaciones promedio: "<<c/pruebas<<endl<<endl;	
             	system("pause");
 				break;
 			case 2:
-				ShellSort(copy,n,comparaciones);
+				ShellSort(copy,n,c);
+				c=0;
+				cout<<"Ingrese el numero de pruebas a realizar: "; cin>>pruebas;
 				cout<<"Ingrese un numero a buscar: "; cin>>dato;
-				inicio=chrono::high_resolution_clock::now(); // inicio
-				pos=binaria(copy,n,dato,comparaciones);
-				fin=chrono::high_resolution_clock::now(); // fin
-            	duracion=fin-inicio;//calcula
+				for (int i=0;i<pruebas;i++) {
+					inicio=chrono::high_resolution_clock::now(); // inicio
+					pos=binaria(copy,n,dato,c);
+					fin=chrono::high_resolution_clock::now(); // fin
+	            	duracion=fin-inicio;//calcula
+					cout<<endl<<"Tiempo de ejecucion (Busqueda Binaria): "<<duracion.count()<<endl<<endl; // imprime
+					tTotal+=duracion.count(); 
+				}
 				cout<<"Resultado de la busqueda, indice: "<<pos;
-				cout<<endl<<"Tiempo de ejecucion (Busqueda Binaria): "<<duracion.count()<<endl<<endl; // imprime
-				cout<<"Numero de comparaciones: "<<comparaciones<<endl<<endl;
+				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
+				cout<<"Numero de comparaciones promedio: "<<c/pruebas<<endl<<endl;
             	system("pause");
 				break;
 			case 0:
@@ -174,7 +210,7 @@ void copia(int A[],int copy[],int n) {
 	}
 }
 //metodo de ordenacion por insercion directa
-void InsercionDir(int A[],int n,int& comparaciones) {
+void InsercionDir(int A[],int n,double& comparaciones) {
 	for (int i=1;i<n;i++) {
 	int aux=A[i];
 	int k=i-1;
@@ -187,7 +223,7 @@ void InsercionDir(int A[],int n,int& comparaciones) {
 	}
 }
 //metodo de ordenacion por shellsort
-void ShellSort(int A[],int n,int& comparaciones) {
+void ShellSort(int A[],int n,double& comparaciones) {
 	int k=n;
 	while (k>0) {
 		k/=2;
@@ -210,7 +246,7 @@ void ShellSort(int A[],int n,int& comparaciones) {
 }
 
 //Busqueda secuencial desordenada
-int secuencialDes(int A[],int n,int dato,int& comparaciones) {
+int secuencialDes(int A[],int n,int dato,double& comparaciones) {
 	int pos=-1;
 	int i=0;
 	while (i<n && A[i]!=dato) {
@@ -223,7 +259,7 @@ int secuencialDes(int A[],int n,int dato,int& comparaciones) {
 	return pos;
 }
 //Busqueda binaria
-int binaria(int A[],int n,int dato,int& comparaciones) {
+int binaria(int A[],int n,int dato,double& comparaciones) {
 	int izq,der,cen,m,pos;
 	izq=0;
 	der=n-1;
