@@ -17,12 +17,16 @@ int main() {
 	SetConsoleOutputCP(CP_UTF8);
 	//inicilizamos el numero srand
 	srand(time(0));
-	const int tamMax=200000;
-	int arr[tamMax];
-	int copy[tamMax];
+	//const int tamMax=200000;
+	//int arr[tamMax];
+	//nt copy[tamMax];
+
 	int n;
 	cout<<"------------COMPARACION DE ALGORITMOS------------\n";
-	cout<<"Ingrese el numero de elementos del arreglo: "; cin>>n;
+	cout<<"Ingrese el numero de elementos del arreglo (maximo 200000): "; cin>>n;
+
+	int* arr=new int[n];
+	int* copy=new int[n];
 
 	//generar numeros de 1 a n 
 	for (int i=0;i<n;i++) {
@@ -176,6 +180,7 @@ void menuBusqueda(int arr[], int copy[], int n) {
 				break;
 			case 2:
 				ShellSort(copy,n,c);
+				c=0;
 				cout<<"Ingrese el numero de pruebas a realizar: "; cin>>pruebas;
 				cout<<"Ingrese un numero a buscar: "; cin>>dato;
 				for (int i=0;i<pruebas;i++) {
@@ -184,7 +189,7 @@ void menuBusqueda(int arr[], int copy[], int n) {
 					fin=chrono::high_resolution_clock::now(); // fin
 	            	duracion=fin-inicio;//calcula
 					cout<<endl<<"Tiempo de ejecucion (Busqueda Binaria): "<<duracion.count()<<endl<<endl; // imprime
-					tTotal+=duracion.count();
+					tTotal+=duracion.count(); 
 				}
 				cout<<"Resultado de la busqueda, indice: "<<pos;
 				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
