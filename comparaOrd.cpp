@@ -191,6 +191,7 @@ void menuBusqueda(int arr[], int copy[], int n) {
 					cout<<endl<<"Tiempo de ejecucion (Busqueda Binaria): "<<duracion.count()<<endl<<endl; // imprime
 					tTotal+=duracion.count(); 
 				}
+				promedioT=tTotal/pruebas;
 				cout<<"Resultado de la busqueda, indice: "<<pos;
 				cout<<endl<<"Tiempo de ejecucion promedio: "<<promedioT<<endl;
 				cout<<"Numero de comparaciones promedio: "<<c/pruebas<<endl<<endl;
