@@ -17,16 +17,14 @@ int main() {
 	SetConsoleOutputCP(CP_UTF8);
 	//inicilizamos el numero srand
 	srand(time(0));
-	//const int tamMax=200000;
-	//int arr[tamMax];
-	//nt copy[tamMax];
+	const int tamMax=200000;
+	int arr[tamMax];
+	int copy[tamMax];
 
 	int n;
 	cout<<"------------COMPARACION DE ALGORITMOS------------\n";
 	cout<<"Ingrese el numero de elementos del arreglo (maximo 200000): "; cin>>n;
 
-	int* arr=new int[n];
-	int* copy=new int[n];
 
 	//generar numeros de 1 a n 
 	for (int i=0;i<n;i++) {
